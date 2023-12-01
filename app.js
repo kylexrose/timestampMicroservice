@@ -5,6 +5,9 @@ const logger = require('morgan')
 app.use(express.json())
 app.use(logger("dev"))
 
+app.get("/", function (req, res) {
+    res.send("Please enter a resource")
+  });
 
 app.get('/api/:date', (req, res)=>{
     const date = decodeURI(req.params.date)
