@@ -2,10 +2,10 @@ const express = require('express')
 const app = express()
 const logger = require('morgan')
 const cors = require('cors');
-// app.use(cors({optionsSuccessStatus: 200}));
+app.use(cors({optionsSuccessStatus: 200}));
 app.use(express.json())
 app.use(logger("dev"))
-app.use(express.static('public'));
+// app.use(express.static('public'));
 
 
 // app.get("/", function (req, res) {
