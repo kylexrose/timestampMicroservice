@@ -1,24 +1,25 @@
 const express = require('express')
 const app = express()
+const logger = require('morgan')
 
 app.use(express.json())
+app.use(logger("dev"))
 
-app.get('/api/:date?', (req, res)=>{
-    const date = parseInt(req.params.date)
-    if(!date){
-        const now = new Date()
-        res.json({unix: Date.parse(now), utc: now.toUTCString()})
-    }else if (date % 1 === 0){
-        const dateStr = new Date(date)
-        res.json({unix: date, utc: dateStr.toUTCString()})
+
+app.get('/api/:date', (req, res)=>{
+    const {date} = req.params
+    const dateStr = new Date(Number(date))
+    if(dateStr == "Invalid Date" && new Date(date) == "Invalid Date"){
+        res.json({error: "Invalid Date"})
     }else{
-        const parsedDate = Date.parse(date)
-        if(parsedDate !== NaN){
-            res.json({unix: parsedDate, utc: new Date(date)})
-        }else{
-            res.json({error: "Invalid Date"})
-        }
+        const parsedDate = Date.parse(dateStr)
+        res.json({unix: parsedDate, utc: dateStr.toUTCString()})
     }
+})
+
+app.get('/api', (req, res)=>{
+    const now = new Date()
+        res.json({unix: Date.parse(now), utc: now.toUTCString()})
 })
 
 app.listen(3000,()=>{
