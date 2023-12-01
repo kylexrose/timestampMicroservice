@@ -8,9 +8,9 @@ app.use(logger("dev"))
 app.use(express.static('public'));
 
 
-app.get("/", function (req, res) {
-    res.sendFile(__dirname + '/views/index.html');
-  });
+// app.get("/", function (req, res) {
+//     res.sendFile(__dirname + '/views/index.html');
+//   });
 
 app.get('/api/:date', (req, res)=>{
     const date = decodeURI(req.params.date)
