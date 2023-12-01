@@ -6,7 +6,7 @@ app.use(cors({optionsSuccessStatus: 200}));
 app.use(express.json())
 app.use(logger("dev"))
 
-app.get('/api/:date', (req, res)=>{
+app.get('/api/:date?', (req, res)=>{
     if(!req.params.date){
         const now = new Date()
         res.json({unix: Date.parse(now), utc: now.toUTCString()})
