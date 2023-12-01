@@ -7,13 +7,19 @@ app.use(logger("dev"))
 
 
 app.get('/api/:date', (req, res)=>{
-    const {date} = req.params
-    const dateStr = new Date(Number(date))
-    if(dateStr == "Invalid Date" && new Date(date) == "Invalid Date"){
+    const date = decodeURI(req.params.date)
+    console.log(date == Number(date))
+
+    const dateStrFromUnix = new Date(Number(date))
+    if(dateStrFromUnix == "Invalid Date" && new Date(date) == "Invalid Date"){
         res.json({error: "Invalid Date"})
+    }else if(date == Number(date)){
+        console.log('16')
+
+        res.json({unix: date, utc: new Date(Number(date)).toUTCString()})
     }else{
-        const parsedDate = Date.parse(dateStr)
-        res.json({unix: parsedDate, utc: dateStr.toUTCString()})
+        const parsedDate = Date.parse(date)
+        res.json({unix: parsedDate, utc: new Date(date).toUTCString()})
     }
 })
 
